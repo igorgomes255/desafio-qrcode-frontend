@@ -2,7 +2,7 @@ import { Container } from "./styles";
 import QRCode from "react-qr-code";
 import { useQRCodeContext } from "../../contexts/qrCodeContext";
 import { Card, CardBody } from "reactstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const QrCode = () => {
   const { link, handleCaptureClick } = useQRCodeContext();
