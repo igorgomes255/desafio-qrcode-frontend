@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 import { IData, IProvider } from "../interfaces/qrCode";
 import html2canvas from "html2canvas";
 import downloadjs from "downloadjs";
+import api from "../services/api";
+import { AxiosError, AxiosResponse } from "axios";
 
 interface IProviderQRCode {
   link: string;
@@ -30,7 +32,14 @@ const QRCodeProvider = ({ children }: IProvider) => {
   };
 
   const saveData = (data: IData) => {
-    console.log(data);
+    api
+      .post("/api/data", data)
+      .then((response: AxiosResponse) => {
+        console.log(response);
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+      });
   };
 
   return (
