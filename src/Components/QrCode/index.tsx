@@ -5,7 +5,7 @@ import { Card, CardBody } from "reactstrap";
 import { useParams } from "react-router-dom";
 
 const QrCode = () => {
-  const { link, handleCaptureClick } = useQRCodeContext();
+  const { link } = useQRCodeContext();
 
   let { user } = useParams();
 
@@ -17,13 +17,9 @@ const QrCode = () => {
         <CardBody>
           <h4>{link}</h4>
           <h5>Scan Me</h5>
-          <QRCode value={`https://desafio-qrcode-phi.vercel.app/${user}`} />
+          <QRCode value={`http://127.0.0.1:5173/user/${user}`} />
         </CardBody>
       </Card>
-
-      <button type="button" onClick={handleCaptureClick}>
-        Download
-      </button>
     </Container>
   );
 };

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { IProvider } from "../interfaces/qrCode";
+import { IData, IProvider } from "../interfaces/qrCode";
 import html2canvas from "html2canvas";
 import downloadjs from "downloadjs";
 
@@ -8,6 +8,7 @@ interface IProviderQRCode {
   setLink: (value: string) => void;
   handleQRCode: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCaptureClick: () => void;
+  saveData: (value: IData) => void;
 }
 
 export const QRCodeContext = createContext({} as IProviderQRCode);
@@ -28,9 +29,13 @@ const QRCodeProvider = ({ children }: IProvider) => {
     downloadjs(dataURL, "qr-code.png", "image/png");
   };
 
+  const saveData = (data: IData) => {
+    console.log(data);
+  };
+
   return (
     <QRCodeContext.Provider
-      value={{ link, setLink, handleQRCode, handleCaptureClick }}
+      value={{ link, setLink, handleQRCode, handleCaptureClick, saveData }}
     >
       {children}
     </QRCodeContext.Provider>
