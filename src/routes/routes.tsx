@@ -7,7 +7,7 @@ const RoutesMain = () => {
     <Routes>
       <Route path="/" element={<Navigate to={"/generate"} />} />
       <Route path="/generate" element={<GeneratePage />} />
-      <Route path="/:user" element={<UserPage />} />
+      <Route path="/user/:user" element={<UserPage />} />
     </Routes>
   );
 };
