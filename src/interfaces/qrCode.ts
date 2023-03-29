@@ -9,3 +9,14 @@ export interface IData {
   linkedin: string;
   github: string;
 }
+
+export interface IDataAPI {
+  id: number;
+  name: string;
+  linkedin: string;
+  github: string;
+}
+
+export interface IDataRetorned {
+  data: IDataAPI;
+}

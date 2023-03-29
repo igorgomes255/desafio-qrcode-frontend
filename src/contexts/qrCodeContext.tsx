@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { IData, IProvider } from "../interfaces/qrCode";
+import { IData, IDataRetorned, IProvider } from "../interfaces/qrCode";
 import html2canvas from "html2canvas";
 import downloadjs from "downloadjs";
 import api from "../services/api";
@@ -11,12 +11,14 @@ interface IProviderQRCode {
   handleQRCode: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCaptureClick: () => void;
   saveData: (value: IData) => void;
+  dataAPI: Partial<IDataRetorned>;
 }
 
 export const QRCodeContext = createContext({} as IProviderQRCode);
 
 const QRCodeProvider = ({ children }: IProvider) => {
   const [link, setLink] = useState<string>("");
+  const [dataAPI, setDataAPI] = useState({});
 
   const handleQRCode = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLink(e.target.value);
@@ -36,6 +38,7 @@ const QRCodeProvider = ({ children }: IProvider) => {
       .post("/api/data", data)
       .then((response: AxiosResponse) => {
         console.log(response);
+        setDataAPI(response.data);
       })
       .catch((err: AxiosError) => {
         console.log(err);
@@ -44,7 +47,14 @@ const QRCodeProvider = ({ children }: IProvider) => {
 
   return (
     <QRCodeContext.Provider
-      value={{ link, setLink, handleQRCode, handleCaptureClick, saveData }}
+      value={{
+        link,
+        setLink,
+        handleQRCode,
+        handleCaptureClick,
+        saveData,
+        dataAPI,
+      }}
     >
       {children}
     </QRCodeContext.Provider>
