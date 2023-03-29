@@ -20,7 +20,9 @@ const QrCode = () => {
           <CardBody>
             <h4>{link}</h4>
             <h5>Scan Me</h5>
-            <QRCode value={`http://127.0.0.1:5173/user/${user}`} />
+            <QRCode
+              value={`https://desafio-qrcode-phi.vercel.app/user/${user}`}
+            />
           </CardBody>
         </Card>
       ) : (
