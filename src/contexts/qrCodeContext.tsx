@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IData, IDataRetorned, IProvider } from "../interfaces/qrCode";
 import html2canvas from "html2canvas";
 import downloadjs from "downloadjs";
@@ -18,7 +18,7 @@ export const QRCodeContext = createContext({} as IProviderQRCode);
 
 const QRCodeProvider = ({ children }: IProvider) => {
   const [link, setLink] = useState<string>("");
-  const [dataAPI, setDataAPI] = useState({});
+  const [dataAPI, setDataAPI] = useState<Partial<IDataRetorned>>({});
 
   const handleQRCode = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLink(e.target.value);
@@ -30,7 +30,7 @@ const QRCodeProvider = ({ children }: IProvider) => {
 
     const canvas = await html2canvas(qrCode);
     const dataURL = canvas.toDataURL("image/png");
-    downloadjs(dataURL, "qr-code.png", "image/png");
+    downloadjs(dataURL, `qr-code-${link}.png`, "image/png");
   };
 
   const saveData = (data: IData) => {
@@ -44,6 +44,12 @@ const QRCodeProvider = ({ children }: IProvider) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    if (dataAPI) {
+      api.get(`/api/data/${dataAPI.data?.id}`);
+    }
+  }, []);
 
   return (
     <QRCodeContext.Provider
